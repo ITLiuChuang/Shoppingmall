@@ -1,5 +1,6 @@
 package com.atguigu.shopping.home.homefragment;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -7,10 +8,16 @@ import android.widget.Toast;
 
 import com.atguigu.shopping.R;
 import com.atguigu.shopping.base.BaseFragment;
+import com.atguigu.shopping.home.bean.HomeBean;
+import com.atguigu.shopping.utils.utilsfragment.Constants;
+import com.google.gson.Gson;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import okhttp3.Call;
 
 /**
  * Created by 刘闯 on 2017/2/22.
@@ -27,6 +34,7 @@ public class HomeFragment extends BaseFragment {
     @InjectView(R.id.ib_top)
     ImageButton ibTop;
     private TextView textView;
+    private Object dataFromNet;
 
     @Override
     public View initView() {
@@ -39,10 +47,36 @@ public class HomeFragment extends BaseFragment {
     public void initData() {
         super.initData();
 
+        getDataFromNet();
+    }
+
+    public void getDataFromNet() {
+        OkHttpUtils.get()
+                .url(Constants.HOME_URL)
+                .id(100).build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.e("TAG", "联网失败" + e.getMessage());
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        Log.e("TAG", "成功失败");
+                        processData(response);
+                    }
+                });
 
     }
 
-
+    /**
+     * 解析数据
+     * @param response
+     */
+    private void processData(String response) {
+        HomeBean homeBean = new Gson().fromJson(response, HomeBean.class);
+    }
 
     @Override
     public void onDestroyView() {
@@ -64,4 +98,6 @@ public class HomeFragment extends BaseFragment {
                 break;
         }
     }
+
+
 }
