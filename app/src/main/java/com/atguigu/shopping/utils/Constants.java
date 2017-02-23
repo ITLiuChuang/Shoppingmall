@@ -1,4 +1,4 @@
-package com.atguigu.shopping.utils.utilsfragment;
+package com.atguigu.shopping.utils;
 
 /**
  * Created by 刘闯 on 2017/2/23.
@@ -7,8 +7,8 @@ package com.atguigu.shopping.utils.utilsfragment;
 public class Constants {
 
     //    public static String BASE_URL = "http://192.168.51.104:8080/atguigu";
-//    public static String BASE_URL = "http://192.168.191.1:8080/atguigu";
-    public static String BASE_URL = "http://192.168.1.23:8080/atguigu";
+   public static String BASE_URL = "http://182.92.5.3:8081/android/resources";
+    //public static String BASE_URL = "http://192.168.1.23:8080/atguigu";
 
 
     private static final String BASE_URL_JSON = BASE_URL+"/json/";

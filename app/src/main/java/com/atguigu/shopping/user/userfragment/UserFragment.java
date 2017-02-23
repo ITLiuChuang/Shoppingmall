@@ -1,4 +1,4 @@
-package com.atguigu.shopping.utils.utilsfragment;
+package com.atguigu.shopping.user.userfragment;
 
 import android.graphics.Color;
 import android.view.Gravity;
@@ -11,7 +11,7 @@ import com.atguigu.shopping.base.BaseFragment;
  * Created by 刘闯 on 2017/2/22.
  */
 
-public class UtilsFragment extends BaseFragment {
+public class UserFragment extends BaseFragment {
 
     private TextView textView;
 

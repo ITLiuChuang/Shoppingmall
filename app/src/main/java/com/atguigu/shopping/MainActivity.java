@@ -11,7 +11,7 @@ import com.atguigu.shopping.community.communityfragment.CommunityFragment;
 import com.atguigu.shopping.home.homefragment.HomeFragment;
 import com.atguigu.shopping.shoppingcart.shoppingcartfragment.ShoppingCartFragment;
 import com.atguigu.shopping.type.typefragment.TypeFragment;
-import com.atguigu.shopping.utils.utilsfragment.UtilsFragment;
+import com.atguigu.shopping.user.userfragment.UserFragment;
 
 import java.util.ArrayList;
 
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(new TypeFragment());
         fragments.add(new CommunityFragment());
         fragments.add(new ShoppingCartFragment());
-        fragments.add(new UtilsFragment());
+        fragments.add(new UserFragment());
 
 
     }

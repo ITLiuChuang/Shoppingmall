@@ -1,5 +1,6 @@
 package com.atguigu.shopping.home.homefragment;
 
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -8,8 +9,9 @@ import android.widget.Toast;
 
 import com.atguigu.shopping.R;
 import com.atguigu.shopping.base.BaseFragment;
+import com.atguigu.shopping.home.adapter.HomeAdapter;
 import com.atguigu.shopping.home.bean.HomeBean;
-import com.atguigu.shopping.utils.utilsfragment.Constants;
+import com.atguigu.shopping.utils.Constants;
 import com.google.gson.Gson;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -35,6 +37,7 @@ public class HomeFragment extends BaseFragment {
     ImageButton ibTop;
     private TextView textView;
     private Object dataFromNet;
+    private HomeAdapter homeAdapter;
 
     @Override
     public View initView() {
@@ -72,10 +75,17 @@ public class HomeFragment extends BaseFragment {
 
     /**
      * 解析数据
+     * 设置适配器
      * @param response
      */
     private void processData(String response) {
         HomeBean homeBean = new Gson().fromJson(response, HomeBean.class);
+        Log.e("TAG", "解析数据成功");
+
+        homeAdapter = new HomeAdapter(mContent,homeBean.getResult());
+        rvHome.setAdapter(homeAdapter);
+
+        rvHome.setLayoutManager(new LinearLayoutManager(mContent,LinearLayoutManager.VERTICAL,false));
     }
 
     @Override
