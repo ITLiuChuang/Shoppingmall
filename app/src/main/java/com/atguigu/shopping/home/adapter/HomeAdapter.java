@@ -66,7 +66,8 @@ public class HomeAdapter extends RecyclerView.Adapter {
     /**
      * 当前类型
      */
-    public int curentType = BANNER;
+    public int currentType = BANNER;
+
 
     private Context mContext;
 
@@ -85,24 +86,24 @@ public class HomeAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         if (position == BANNER) {
-            curentType = BANNER;
+            currentType = BANNER;
         } else if (position == CHANNEL) {
-            curentType = CHANNEL;
+            currentType = CHANNEL;
 
         } else if (position == ACT) {
-            curentType = ACT;
+            currentType = ACT;
 
         } else if (position == SECKILL) {
-            curentType = SECKILL;
+            currentType = SECKILL;
 
         } else if (position == RECOMMEND) {
-            curentType = RECOMMEND;
+            currentType = RECOMMEND;
 
         } else if (position == HOT) {
-            curentType = HOT;
+            currentType = HOT;
 
         }
-        return curentType;
+        return currentType;
     }
 
     /**
