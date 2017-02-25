@@ -2,6 +2,7 @@ package com.atguigu.shopping.home.adapter;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atguigu.shopping.R;
@@ -27,6 +29,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cn.iwgang.countdownview.CountdownView;
 
 /**
  * Created by 刘闯 on 2017/2/23.
@@ -70,6 +73,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
      * 当前类型
      */
     public int currentType = BANNER;
+
 
 
     private Context mContext;
@@ -129,6 +133,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
             return new ACTViewHolder(mContext, inflater.inflate(R.layout.act_item, null));
 
         } else if (viewType == SECKILL) {
+            return new SeckillViewHolder(mContext, inflater.inflate(R.layout.seckill_item, null));
 
         } else if (viewType == RECOMMEND) {
 
@@ -161,6 +166,8 @@ public class HomeAdapter extends RecyclerView.Adapter {
             viewHolder.setData(result.getAct_info());
 
         } else if (getItemViewType(position) == SECKILL) {
+            SeckillViewHolder viewHolder = (SeckillViewHolder) holder;
+            viewHolder.setData(result.getSeckill_info());
 
         } else if (getItemViewType(position) == RECOMMEND) {
 
@@ -177,7 +184,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
      */
     @Override
     public int getItemCount() {
-        return 3;
+        return 4;
     }
 
     class BannerViewHolder extends RecyclerView.ViewHolder {
@@ -274,6 +281,39 @@ public class HomeAdapter extends RecyclerView.Adapter {
                     Toast.makeText(mContext, "position" + position, Toast.LENGTH_SHORT).show();
                 }
             });
+        }
+    }
+
+    class SeckillViewHolder extends RecyclerView.ViewHolder {
+        @InjectView(R.id.countdownview)
+        CountdownView countdownview;
+        @InjectView(R.id.tv_more_seckill)
+        TextView tvMoreSeckill;
+        @InjectView(R.id.rv_seckill)
+        RecyclerView rvSeckill;
+        SeckillRecyclerViewAdapter adapter;
+        public SeckillViewHolder(Context mContext, View inflate) {
+            super(inflate);
+            ButterKnife.inject(this,inflate);
+        }
+
+        public void setData(HomeBean.ResultBean.SeckillInfoBean seckill_info) {
+            //设置适配器
+            adapter = new SeckillRecyclerViewAdapter(mContext,seckill_info);
+            rvSeckill.setAdapter(adapter);
+
+            //设置管理器
+            rvSeckill.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false));
+            //点击事件
+            adapter.setOnItemClickListener(new ViewPagerAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View v, int position) {
+                    Toast.makeText(mContext, "position" + position, Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            long duration = Long.parseLong(seckill_info.getEnd_time())-Long.parseLong(seckill_info.getStart_time());
+            countdownview.start(duration);
         }
     }
 }
