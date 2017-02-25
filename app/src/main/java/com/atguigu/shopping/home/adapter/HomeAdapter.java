@@ -1,6 +1,7 @@
 package com.atguigu.shopping.home.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.atguigu.shopping.R;
+import com.atguigu.shopping.app.GoodsInfoActivity;
+import com.atguigu.shopping.home.bean.GoodsBean;
 import com.atguigu.shopping.home.bean.HomeBean;
 import com.atguigu.shopping.home.view.MyGridView;
 import com.atguigu.shopping.utils.Constants;
@@ -76,8 +79,8 @@ public class HomeAdapter extends RecyclerView.Adapter {
     public int currentType = BANNER;
 
 
-
     private Context mContext;
+    public static final String GOODS_BEAN = "goodsBean";;
 
     public HomeAdapter(Context mContent, HomeBean.ResultBean result) {
         this.mContext = mContent;
@@ -229,6 +232,9 @@ public class HomeAdapter extends RecyclerView.Adapter {
                 @Override
                 public void OnBannerClick(int position) {
                     int realposition = position;
+                    Intent intent = new Intent(mContext, GoodsInfoActivity.class);
+                    mContext.startActivity(intent);
+
                 }
             });
         }
@@ -337,7 +343,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
             ButterKnife.inject(this, inflate);
         }
 
-        public void setData(List<HomeBean.ResultBean.RecommendInfoBean> recommend_info) {
+        public void setData(final List<HomeBean.ResultBean.RecommendInfoBean> recommend_info) {
             //设置适配器
             adapter = new RecommendGridViewAdapter(mContext, recommend_info);
             gvRecommend.setAdapter(adapter);
@@ -346,7 +352,19 @@ public class HomeAdapter extends RecyclerView.Adapter {
             gvRecommend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(mContext, "position" + position, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(mContext, "position" + position, Toast.LENGTH_SHORT).show();
+                    HomeBean.ResultBean.RecommendInfoBean recommendInfoBean = recommend_info.get(position);
+                    //传入数据
+                    GoodsBean goodsBean = new GoodsBean();
+                    goodsBean.setName(recommendInfoBean.getName());
+                    goodsBean.setCover_price(recommendInfoBean.getCover_price());
+                    goodsBean.setFigure(recommendInfoBean.getFigure());
+                    goodsBean.setProduct_id(recommendInfoBean.getProduct_id());
+
+                    Intent intent = new Intent(mContext, GoodsInfoActivity.class);
+                    intent.putExtra(GOODS_BEAN, goodsBean);
+                    mContext.startActivity(intent);
+
                 }
             });
         }
@@ -360,6 +378,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
         private List<HomeBean.ResultBean.HotInfoBean> data;
         HotGridViewAdapter adapter;
+
         public HotViewHolder(Context mContext, View inflate) {
             super(inflate);
             ButterKnife.inject(this, inflate);
@@ -368,7 +387,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
         public void setData(List<HomeBean.ResultBean.HotInfoBean> hot_info) {
             //设置适配器
-            adapter = new HotGridViewAdapter(mContext,hot_info);
+            adapter = new HotGridViewAdapter(mContext, hot_info);
             gvHot.setAdapter(adapter);
             //点击事件
             gvHot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
