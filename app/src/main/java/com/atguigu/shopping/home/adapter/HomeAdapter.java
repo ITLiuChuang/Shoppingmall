@@ -1,6 +1,7 @@
 package com.atguigu.shopping.home.adapter;
 
 import android.content.Context;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +14,13 @@ import android.widget.Toast;
 import com.atguigu.shopping.R;
 import com.atguigu.shopping.home.bean.HomeBean;
 import com.atguigu.shopping.utils.Constants;
+import com.atguigu.shopping.utils.DensityUtil;
 import com.bumptech.glide.Glide;
 import com.youth.banner.Banner;
 import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
+import com.zhy.magicviewpager.transformer.RotateYTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,10 +121,12 @@ public class HomeAdapter extends RecyclerView.Adapter {
 
         if (viewType == BANNER) {
             return new BannerViewHolder(mContext, inflater.inflate(R.layout.banner_viewpager, null));
+
         } else if (viewType == CHANNEL) {
             return new ChannelViewHolder(mContext, inflater.inflate(R.layout.channel_item, null));
 
         } else if (viewType == ACT) {
+            return new ACTViewHolder(mContext, inflater.inflate(R.layout.act_item, null));
 
         } else if (viewType == SECKILL) {
 
@@ -152,6 +157,8 @@ public class HomeAdapter extends RecyclerView.Adapter {
             viewHolder.setData(result.getChannel_info());
 
         } else if (getItemViewType(position) == ACT) {
+            ACTViewHolder viewHolder = (ACTViewHolder) holder;
+            viewHolder.setData(result.getAct_info());
 
         } else if (getItemViewType(position) == SECKILL) {
 
@@ -170,10 +177,10 @@ public class HomeAdapter extends RecyclerView.Adapter {
      */
     @Override
     public int getItemCount() {
-        return 2;
+        return 3;
     }
 
-    private class BannerViewHolder extends RecyclerView.ViewHolder {
+    class BannerViewHolder extends RecyclerView.ViewHolder {
         private final Context mContext;
         private Banner banner;
 
@@ -236,6 +243,35 @@ public class HomeAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Toast.makeText(mContext, "position==" + position, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    class ACTViewHolder extends RecyclerView.ViewHolder {
+        @InjectView(R.id.act_viewpager)
+        ViewPager actViewpager;
+        ViewPagerAdapter viewPagerAdapter;
+
+        public ACTViewHolder(Context mContext, View inflate) {
+            super(inflate);
+            ButterKnife.inject(this, inflate);
+        }
+
+
+        public void setData(List<HomeBean.ResultBean.ActInfoBean> act_info) {
+            //设置适配器
+            viewPagerAdapter = new ViewPagerAdapter(mContext, act_info);
+            actViewpager.setAdapter(viewPagerAdapter);
+            //美化
+            actViewpager.setPageMargin(DensityUtil.dip2px(mContext, 20));
+            actViewpager.setOffscreenPageLimit(3);
+            actViewpager.setPageTransformer(true, new RotateYTransformer());
+            //点击事件
+            viewPagerAdapter.setOnItemClickListener(new ViewPagerAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View v, int position) {
+                    Toast.makeText(mContext, "position" + position, Toast.LENGTH_SHORT).show();
                 }
             });
         }
