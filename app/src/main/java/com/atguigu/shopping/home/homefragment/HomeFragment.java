@@ -1,6 +1,6 @@
 package com.atguigu.shopping.home.homefragment;
 
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -76,16 +76,30 @@ public class HomeFragment extends BaseFragment {
     /**
      * 解析数据
      * 设置适配器
+     *
      * @param response
      */
     private void processData(String response) {
         HomeBean homeBean = new Gson().fromJson(response, HomeBean.class);
         Log.e("TAG", "解析数据成功");
 
-        homeAdapter = new HomeAdapter(mContent,homeBean.getResult());
+        homeAdapter = new HomeAdapter(mContent, homeBean.getResult());
         rvHome.setAdapter(homeAdapter);
+        GridLayoutManager manager = new GridLayoutManager(mContent, 1);
+        //设置布局管理器
+        rvHome.setLayoutManager(manager);
+        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup(){
 
-        rvHome.setLayoutManager(new LinearLayoutManager(mContent,LinearLayoutManager.VERTICAL,false));
+            @Override
+            public int getSpanSize(int position) {
+                if(position<=3) {
+                    ibTop.setVisibility(View.GONE);
+                }else {
+                    ibTop.setVisibility(View.VISIBLE);
+                }
+                return 1;
+            }
+        });
     }
 
     @Override
@@ -104,7 +118,8 @@ public class HomeFragment extends BaseFragment {
                 Toast.makeText(mContent, "消息", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.ib_top:
-                Toast.makeText(mContent, "返回顶部", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContent, "返回顶部", Toast.LENGTH_SHORT).show();
+                rvHome.scrollToPosition(0);
                 break;
         }
     }
