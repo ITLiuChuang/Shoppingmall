@@ -73,7 +73,10 @@ public class HomeAdapter extends RecyclerView.Adapter {
      * 当前类型
      */
     public int currentType = BANNER;
-
+    @InjectView(R.id.tv_more_recommend)
+    TextView tvMoreRecommend;
+    @InjectView(R.id.gv_recommend)
+    GridView gvRecommend;
 
 
     private Context mContext;
@@ -136,6 +139,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
             return new SeckillViewHolder(mContext, inflater.inflate(R.layout.seckill_item, null));
 
         } else if (viewType == RECOMMEND) {
+            return new RecommendViewHolder(mContext, inflater.inflate(R.layout.recommend_item, null));
 
         } else if (viewType == HOT) {
 
@@ -170,6 +174,8 @@ public class HomeAdapter extends RecyclerView.Adapter {
             viewHolder.setData(result.getSeckill_info());
 
         } else if (getItemViewType(position) == RECOMMEND) {
+            RecommendViewHolder viewHolder = (RecommendViewHolder) holder;
+            viewHolder.setData(result.getRecommend_info());
 
         } else if (getItemViewType(position) == HOT) {
 
@@ -184,7 +190,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
      */
     @Override
     public int getItemCount() {
-        return 4;
+        return 5;
     }
 
     class BannerViewHolder extends RecyclerView.ViewHolder {
@@ -292,18 +298,19 @@ public class HomeAdapter extends RecyclerView.Adapter {
         @InjectView(R.id.rv_seckill)
         RecyclerView rvSeckill;
         SeckillRecyclerViewAdapter adapter;
+
         public SeckillViewHolder(Context mContext, View inflate) {
             super(inflate);
-            ButterKnife.inject(this,inflate);
+            ButterKnife.inject(this, inflate);
         }
 
         public void setData(HomeBean.ResultBean.SeckillInfoBean seckill_info) {
             //设置适配器
-            adapter = new SeckillRecyclerViewAdapter(mContext,seckill_info);
+            adapter = new SeckillRecyclerViewAdapter(mContext, seckill_info);
             rvSeckill.setAdapter(adapter);
 
             //设置管理器
-            rvSeckill.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.HORIZONTAL,false));
+            rvSeckill.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
             //点击事件
             adapter.setOnItemClickListener(new ViewPagerAdapter.OnItemClickListener() {
                 @Override
@@ -312,8 +319,35 @@ public class HomeAdapter extends RecyclerView.Adapter {
                 }
             });
 
-            long duration = Long.parseLong(seckill_info.getEnd_time())-Long.parseLong(seckill_info.getStart_time());
+            long duration = Long.parseLong(seckill_info.getEnd_time()) - Long.parseLong(seckill_info.getStart_time());
             countdownview.start(duration);
+        }
+    }
+
+    class RecommendViewHolder extends RecyclerView.ViewHolder {
+        @InjectView(R.id.tv_more_recommend)
+        TextView tvMoreRecommend;
+        @InjectView(R.id.gv_recommend)
+        GridView gvRecommend;
+        RecommendGridViewAdapter adapter;
+
+        public RecommendViewHolder(Context mContext, View inflate) {
+            super(inflate);
+            ButterKnife.inject(this, inflate);
+        }
+
+        public void setData(List<HomeBean.ResultBean.RecommendInfoBean> recommend_info) {
+            //设置适配器
+            adapter = new RecommendGridViewAdapter(mContext,recommend_info);
+            gvRecommend.setAdapter(adapter);
+            //点击事件
+
+            gvRecommend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Toast.makeText(mContext, "position" + position, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }
