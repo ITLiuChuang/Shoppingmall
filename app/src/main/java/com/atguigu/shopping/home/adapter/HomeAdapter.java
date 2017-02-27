@@ -263,7 +263,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
                         goodsBean.setFigure(image);
 
                         Intent intent = new Intent(mContext, GoodsInfoActivity.class);
-                        intent.putExtra(GOODS_BEAN,goodsBean);
+                        intent.putExtra(GOODS_BEAN, goodsBean);
                         mContext.startActivity(intent);
                     }
 
@@ -330,8 +330,8 @@ public class HomeAdapter extends RecyclerView.Adapter {
                     webViewBean.setUrl(actInfoBean.getUrl());
 
                     Intent intent = new Intent(mContext, WebViewActivity.class);
-                    intent.putExtra(WEBVIEW_BEAN,webViewBean);
-                   mContext.startActivity(intent);
+                    intent.putExtra(WEBVIEW_BEAN, webViewBean);
+                    mContext.startActivity(intent);
                 }
             });
         }
@@ -351,7 +351,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
             ButterKnife.inject(this, inflate);
         }
 
-        public void setData(HomeBean.ResultBean.SeckillInfoBean seckill_info) {
+        public void setData(final HomeBean.ResultBean.SeckillInfoBean seckill_info) {
             //设置适配器
             adapter = new SeckillRecyclerViewAdapter(mContext, seckill_info);
             rvSeckill.setAdapter(adapter);
@@ -362,7 +362,16 @@ public class HomeAdapter extends RecyclerView.Adapter {
             adapter.setOnItemClickListener(new ViewPagerAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
-                    Toast.makeText(mContext, "position" + position, Toast.LENGTH_SHORT).show();
+                    HomeBean.ResultBean.SeckillInfoBean.ListBean listBean = seckill_info.getList().get(position);
+                    GoodsBean goodsBean = new GoodsBean();
+                    goodsBean.setFigure(listBean.getFigure());
+                    goodsBean.setName(listBean.getName());
+                    goodsBean.setCover_price(listBean.getCover_price());
+                    goodsBean.setProduct_id(listBean.getProduct_id());
+
+                    Intent intent = new Intent(mContext, GoodsInfoActivity.class);
+                    intent.putExtra(GOODS_BEAN, goodsBean);
+                    mContext.startActivity(intent);
                 }
             });
 
@@ -425,7 +434,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
         }
 
 
-        public void setData(List<HomeBean.ResultBean.HotInfoBean> hot_info) {
+        public void setData(final List<HomeBean.ResultBean.HotInfoBean> hot_info) {
             //设置适配器
             adapter = new HotGridViewAdapter(mContext, hot_info);
             gvHot.setAdapter(adapter);
@@ -433,7 +442,17 @@ public class HomeAdapter extends RecyclerView.Adapter {
             gvHot.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(mContext, "position" + position, Toast.LENGTH_SHORT).show();
+                    HomeBean.ResultBean.HotInfoBean hotInfoBean = hot_info.get(position);
+                    GoodsBean goodsBean = new GoodsBean();
+                    goodsBean.setFigure(hotInfoBean.getFigure());
+                    goodsBean.setProduct_id(hotInfoBean.getProduct_id());
+                    goodsBean.setCover_price(hotInfoBean.getCover_price());
+                    goodsBean.setName(hotInfoBean.getName());
+
+                    Intent intent = new Intent(mContext, GoodsInfoActivity.class);
+                    intent.putExtra(GOODS_BEAN, goodsBean);
+                    mContext.startActivity(intent);
+
                 }
             });
         }

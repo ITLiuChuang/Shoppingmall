@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -56,7 +57,7 @@ public class WebViewActivity extends AppCompatActivity {
         settings.setJavaScriptEnabled(true);
         settings.setBuiltInZoomControls(true);
         settings.setUseWideViewPort(true);
-        webview.setWebViewClient(new WebViewClient(){
+        webview.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
@@ -77,6 +78,7 @@ public class WebViewActivity extends AppCompatActivity {
                 return true;
             }
         });
+        webview.addJavascriptInterface(new MyJavascriptInterface(), "cyc");
         webview.loadUrl(Constants.BASE_URL_IMAGE + webViewBean.getUrl());
     }
 
@@ -94,4 +96,10 @@ public class WebViewActivity extends AppCompatActivity {
     }
 
 
+    class MyJavascriptInterface {
+        @JavascriptInterface
+        public void jumpForAndroid(String data) {
+            Toast.makeText(WebViewActivity.this, "data = " + data, Toast.LENGTH_SHORT).show();
+        }
+    }
 }
