@@ -1,8 +1,10 @@
 package com.atguigu.shopping.app;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -88,7 +90,7 @@ public class GoodsInfoActivity extends AppCompatActivity {
         Glide.with(this).load(Constants.BASE_URL_IMAGE + goodsBean.getFigure()).into(ivGoodInfoImage);
         //设置名称和价格
         tvGoodInfoName.setText(goodsBean.getName());
-        tvGoodInfoPrice.setText("￥"+goodsBean.getCover_price());
+        tvGoodInfoPrice.setText("￥" + goodsBean.getCover_price());
         //设置网路加载
         setLoadWab("http://mp.weixin.qq.com/s/Cf3DrW2lnlb-w4wYaxOEZg");
     }
@@ -102,16 +104,31 @@ public class GoodsInfoActivity extends AppCompatActivity {
         //添加双击缩放
         settings.setUseWideViewPort(true);
         //添加WebViewClient,不添加会调用系统浏览器
-        wbGoodInfoMore.setWebViewClient(new WebViewClient(){
+        wbGoodInfoMore.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 progressbar.setVisibility(View.GONE);
             }
-        });wbGoodInfoMore.loadUrl(url);
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    view.loadUrl(request.getUrl().toString());
+                }
+                return true;
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
+        wbGoodInfoMore.loadUrl(url);
     }
 
-    @OnClick({R.id.ib_good_info_back, R.id.ib_good_info_more, R.id.tv_good_info_callcenter, R.id.tv_good_info_collection, R.id.tv_good_info_cart, R.id.btn_good_info_addcart, R.id.tv_more_search, R.id.tv_more_home, R.id.btn_more,R.id.tv_more_share})
+    @OnClick({R.id.ib_good_info_back, R.id.ib_good_info_more, R.id.tv_good_info_callcenter, R.id.tv_good_info_collection, R.id.tv_good_info_cart, R.id.btn_good_info_addcart, R.id.tv_more_search, R.id.tv_more_home, R.id.btn_more, R.id.tv_more_share})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ib_good_info_back:
