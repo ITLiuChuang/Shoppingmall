@@ -2,6 +2,7 @@ package com.atguigu.shopping.app;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,6 +18,7 @@ import com.atguigu.shopping.home.bean.GoodsBean;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 public class GoodsInfoActivity extends AppCompatActivity {
 
@@ -60,6 +62,7 @@ public class GoodsInfoActivity extends AppCompatActivity {
     Button btnMore;
     @InjectView(R.id.ll_root)
     LinearLayout llRoot;
+    private GoodsBean goodsBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +74,50 @@ public class GoodsInfoActivity extends AppCompatActivity {
     }
 
     public void getData() {
-        GoodsBean goodsBean = (GoodsBean) getIntent().getSerializableExtra(HomeAdapter.GOODS_BEAN);
-        Toast.makeText(GoodsInfoActivity.this, goodsBean.toString() + "", Toast.LENGTH_SHORT).show();
+        goodsBean = (GoodsBean) getIntent().getSerializableExtra(HomeAdapter.GOODS_BEAN);
     }
+
+    @OnClick({R.id.ib_good_info_back, R.id.ib_good_info_more, R.id.tv_good_info_callcenter, R.id.tv_good_info_collection, R.id.tv_good_info_cart, R.id.btn_good_info_addcart, R.id.tv_more_search, R.id.tv_more_home, R.id.btn_more,R.id.tv_more_share})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ib_good_info_back:
+                finish();
+                break;
+            case R.id.ib_good_info_more:
+                if (llRoot.isShown()) {
+                    llRoot.setVisibility(View.GONE);
+                } else {
+                    llRoot.setVisibility(View.VISIBLE);
+                }
+                break;
+            case R.id.tv_good_info_callcenter:
+                Toast.makeText(GoodsInfoActivity.this, "联系客服", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.tv_good_info_collection:
+                Toast.makeText(GoodsInfoActivity.this, "收藏", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.tv_good_info_cart:
+                Toast.makeText(GoodsInfoActivity.this, "购物车", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_good_info_addcart:
+                Toast.makeText(GoodsInfoActivity.this, "添加购物车", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.tv_more_search:
+                Toast.makeText(GoodsInfoActivity.this, "分享", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.tv_more_share:
+                Toast.makeText(GoodsInfoActivity.this, "搜索", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.tv_more_home:
+                Toast.makeText(GoodsInfoActivity.this, "主页", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_more:
+                llRoot.setVisibility(View.GONE);
+                break;
+
+
+        }
+    }
+
+
 }
