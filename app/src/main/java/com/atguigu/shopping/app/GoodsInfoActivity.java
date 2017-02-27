@@ -3,7 +3,9 @@ package com.atguigu.shopping.app;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -15,6 +17,8 @@ import android.widget.Toast;
 import com.atguigu.shopping.R;
 import com.atguigu.shopping.home.adapter.HomeAdapter;
 import com.atguigu.shopping.home.bean.GoodsBean;
+import com.atguigu.shopping.utils.Constants;
+import com.bumptech.glide.Glide;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -75,6 +79,36 @@ public class GoodsInfoActivity extends AppCompatActivity {
 
     public void getData() {
         goodsBean = (GoodsBean) getIntent().getSerializableExtra(HomeAdapter.GOODS_BEAN);
+
+        setData();
+    }
+
+    private void setData() {
+        //设置图片
+        Glide.with(this).load(Constants.BASE_URL_IMAGE + goodsBean.getFigure()).into(ivGoodInfoImage);
+        //设置名称和价格
+        tvGoodInfoName.setText(goodsBean.getName());
+        tvGoodInfoPrice.setText("￥"+goodsBean.getCover_price());
+        //设置网路加载
+        setLoadWab("http://mp.weixin.qq.com/s/Cf3DrW2lnlb-w4wYaxOEZg");
+    }
+
+    private void setLoadWab(String url) {
+        WebSettings settings = wbGoodInfoMore.getSettings();
+        //支持js
+        settings.setJavaScriptEnabled(true);
+        //添加缩放按钮
+        settings.setBuiltInZoomControls(true);
+        //添加双击缩放
+        settings.setUseWideViewPort(true);
+        //添加WebViewClient,不添加会调用系统浏览器
+        wbGoodInfoMore.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                progressbar.setVisibility(View.GONE);
+            }
+        });wbGoodInfoMore.loadUrl(url);
     }
 
     @OnClick({R.id.ib_good_info_back, R.id.ib_good_info_more, R.id.tv_good_info_callcenter, R.id.tv_good_info_collection, R.id.tv_good_info_cart, R.id.btn_good_info_addcart, R.id.tv_more_search, R.id.tv_more_home, R.id.btn_more,R.id.tv_more_share})
