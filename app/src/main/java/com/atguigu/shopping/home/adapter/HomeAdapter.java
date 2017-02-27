@@ -18,6 +18,7 @@ import com.atguigu.shopping.R;
 import com.atguigu.shopping.app.GoodsInfoActivity;
 import com.atguigu.shopping.home.bean.GoodsBean;
 import com.atguigu.shopping.home.bean.HomeBean;
+import com.atguigu.shopping.home.bean.WebViewBean;
 import com.atguigu.shopping.home.view.MyGridView;
 import com.atguigu.shopping.utils.Constants;
 import com.atguigu.shopping.utils.DensityUtil;
@@ -67,6 +68,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
      * 热卖
      */
     public static final int HOT = 5;
+    public static final String WEBVIEW_BEAN = "webview_bean";
     private final HomeBean.ResultBean result;
     /**
      * 用他加载布局
@@ -309,7 +311,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
         }
 
 
-        public void setData(List<HomeBean.ResultBean.ActInfoBean> act_info) {
+        public void setData(final List<HomeBean.ResultBean.ActInfoBean> act_info) {
             //设置适配器
             viewPagerAdapter = new ViewPagerAdapter(mContext, act_info);
             actViewpager.setAdapter(viewPagerAdapter);
@@ -321,7 +323,15 @@ public class HomeAdapter extends RecyclerView.Adapter {
             viewPagerAdapter.setOnItemClickListener(new ViewPagerAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
-                    Toast.makeText(mContext, "position" + position, Toast.LENGTH_SHORT).show();
+                    WebViewBean webViewBean = new WebViewBean();
+                    HomeBean.ResultBean.ActInfoBean actInfoBean = act_info.get(position);
+                    webViewBean.setName(actInfoBean.getName());
+                    webViewBean.setIcon_url(actInfoBean.getIcon_url());
+                    webViewBean.setUrl(actInfoBean.getUrl());
+
+                    Intent intent = new Intent(mContext, WebViewActivity.class);
+                    intent.putExtra(WEBVIEW_BEAN,webViewBean);
+                   mContext.startActivity(intent);
                 }
             });
         }
