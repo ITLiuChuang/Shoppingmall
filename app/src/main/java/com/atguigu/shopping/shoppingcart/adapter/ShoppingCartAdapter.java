@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.atguigu.shopping.R;
 import com.atguigu.shopping.home.bean.GoodsBean;
+import com.atguigu.shopping.shoppingcart.utils.CartStorage;
 import com.atguigu.shopping.shoppingcart.view.AddSubView;
 import com.atguigu.shopping.utils.Constants;
 import com.bumptech.glide.Glide;
@@ -101,31 +102,54 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
                     number++;
                 }
             }
-            if (datas.size()==number) {
+            if (datas.size() == number) {
                 checkboxDeleteAll.setChecked(true);
                 checkboxAll.setChecked(true);
 
             }
-        }else {
+        } else {
             checkboxAll.setChecked(false);
             checkboxDeleteAll.setChecked(false);
         }
     }
 
-    public void checkAll_none(boolean isChecked){
-        if(datas!=null&&datas.size()>0) {
+    /**
+     * 删除
+     */
+    public void deleteData() {
+        if (datas != null && datas.size() > 0) {
+            for (int i = 0; i < datas.size(); i++) {
+                GoodsBean goodsBean = datas.get(i);
+                if (goodsBean.isChecked()) {
+                    //内存删除
+                    datas.remove(goodsBean);
+                    //本地保存
+                    CartStorage.getInstance(mContent).daleteData(goodsBean);
+                    //刷新数据
+                    notifyItemRemoved(i);
+                    i--;
+                }
+
+            }
+
+        }
+    }
+
+    public void checkAll_none(boolean isChecked) {
+        if (datas != null && datas.size() > 0) {
             for (int i = 0; i < datas.size(); i++) {
                 GoodsBean goodsBean = datas.get(i);
                 //设置勾选状态
                 goodsBean.setChecked(isChecked);
                 checkboxAll.setChecked(isChecked);
                 checkboxDeleteAll.setChecked(isChecked);
-                //跟新视图
+                //更新视图
                 notifyItemChanged(i);
             }
         }
 
     }
+
     public double getTotalPrice() {
         double totalPrice = 0;
         if (datas != null && datas.size() > 0) {
