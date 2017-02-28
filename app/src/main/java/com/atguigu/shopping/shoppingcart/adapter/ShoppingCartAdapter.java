@@ -41,7 +41,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         showTotalPrice();
     }
 
-    private void showTotalPrice() {
+    public void showTotalPrice() {
         tvShopcartTotal.setText("合计：" + getTotalPrice());
     }
 
@@ -86,13 +86,39 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         return datas.size();
     }
 
-    public double getTotalPrice() {
-        double totalPrice = 0;
-        if(datas!=null&&datas.size()>0) {
+    /**
+     * 校验是否全选
+     */
+    public void checkAll() {
+        if (datas != null && datas.size() > 0) {
+            int number = 0;
             for (int i = 0; i < datas.size(); i++) {
                 GoodsBean goodsBean = datas.get(i);
-                if(goodsBean.isChecked()) {
-                    totalPrice+=Double.parseDouble(goodsBean.getCover_price())*goodsBean.getNumber();
+                if (!goodsBean.isChecked()) {
+                    checkboxAll.setChecked(false);
+                    checkboxDeleteAll.setChecked(false);
+                } else {
+                    number++;
+                }
+            }
+            if (datas.size()==number) {
+                checkboxDeleteAll.setChecked(true);
+                checkboxAll.setChecked(true);
+
+            }
+        }else {
+            checkboxAll.setChecked(false);
+            checkboxDeleteAll.setChecked(false);
+        }
+    }
+
+    public double getTotalPrice() {
+        double totalPrice = 0;
+        if (datas != null && datas.size() > 0) {
+            for (int i = 0; i < datas.size(); i++) {
+                GoodsBean goodsBean = datas.get(i);
+                if (goodsBean.isChecked()) {
+                    totalPrice += Double.parseDouble(goodsBean.getCover_price()) * goodsBean.getNumber();
                 }
             }
         }
@@ -114,8 +140,26 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         MyViewHoler(View view) {
             super(view);
             ButterKnife.inject(this, view);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (itemOnItemClick != null) {
+                        itemOnItemClick.onItemClickListener(v, getLayoutPosition());
+                    }
+                }
+            });
         }
     }
 
+    public interface OnItemClickListener {
+        public void onItemClickListener(View view, int position);
+    }
+
+    private OnItemClickListener itemOnItemClick;
+
+    public void setOnItemClickListener(OnItemClickListener l) {
+        this.itemOnItemClick = l;
+
+    }
 
 }

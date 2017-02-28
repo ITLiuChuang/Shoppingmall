@@ -3,7 +3,6 @@ package com.atguigu.shopping.app;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -84,7 +83,6 @@ public class GoodsInfoActivity extends AppCompatActivity {
     public void getData() {
 
         goodsBean = (GoodsBean) getIntent().getSerializableExtra(HomeAdapter.GOODS_BEAN);
-        Log.e("TAG","333333333333333"+goodsBean);
         setData();
     }
 

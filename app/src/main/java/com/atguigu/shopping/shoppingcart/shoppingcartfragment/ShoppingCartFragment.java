@@ -56,6 +56,7 @@ public class ShoppingCartFragment extends BaseFragment {
     @InjectView(R.id.ll_empty_shopcart)
     LinearLayout llEmptyShopcart;
     private ShoppingCartAdapter adapter;
+    private List<GoodsBean> list;
 
     @Override
     public View initView() {
@@ -65,21 +66,36 @@ public class ShoppingCartFragment extends BaseFragment {
     }
 
 
-
     @Override
     public void initData() {
         super.initData();
-        List<GoodsBean> list = CartStorage.getInstance(mContent).getAllData();
+        list = CartStorage.getInstance(mContent).getAllData();
         Toast.makeText(mContent, "list = " + list.size(), Toast.LENGTH_SHORT).show();
         if (list != null && list.size() > 0) {
             //有数据
             llEmptyShopcart.setVisibility(View.GONE);
-            adapter = new ShoppingCartAdapter(mContent, list,tvShopcartTotal,checkboxAll,checkboxDeleteAll);
+            adapter = new ShoppingCartAdapter(mContent, list, tvShopcartTotal, checkboxAll, checkboxDeleteAll);
             //设置适配器
             recyclerview.setAdapter(adapter);
             //设置管理器
             recyclerview.setLayoutManager(new LinearLayoutManager(mContent, LinearLayoutManager.VERTICAL, false));
             //点击事件监听
+            adapter.setOnItemClickListener(new ShoppingCartAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClickListener(View view, int position) {
+                    //设置Bean对象取反
+                    GoodsBean goodsBean = list.get(position);
+                    goodsBean.setChecked(!goodsBean.isChecked());
+                    adapter.notifyItemChanged(position);
+                    //刷新价格
+                    adapter.showTotalPrice();
+                    //校验是否全选
+                    adapter.checkAll();
+
+                }
+            });
+            //校验是否全选
+            adapter.checkAll();
         } else {
             //没数据
             llEmptyShopcart.setVisibility(View.VISIBLE);
