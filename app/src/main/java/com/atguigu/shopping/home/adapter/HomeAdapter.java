@@ -254,7 +254,7 @@ public class HomeAdapter extends RecyclerView.Adapter {
                             name = "【蓝诺】《天下吾双》 剑网3同人本";
                         }
 
-                        image = banner_info.get(position).toString();
+                        image = banner_info.get(position).getImage();
 
                         GoodsBean goodsBean = new GoodsBean();
                         goodsBean.setProduct_id(product_id);

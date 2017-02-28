@@ -90,7 +90,7 @@ public class GoodsInfoActivity extends AppCompatActivity {
         Glide.with(this).load(Constants.BASE_URL_IMAGE+goodsBean.getFigure()).into(ivGoodInfoImage);
         //设置名称和价格
         tvGoodInfoName.setText(goodsBean.getName());
-        tvGoodInfoPrice.setText("￥" + goodsBean.getCover_price());
+        tvGoodInfoPrice.setText("¥" + goodsBean.getCover_price());
         //设置网路加载
         setLoadWab("http://mp.weixin.qq.com/s/Cf3DrW2lnlb-w4wYaxOEZg");
     }
