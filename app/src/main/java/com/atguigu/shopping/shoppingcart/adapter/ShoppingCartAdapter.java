@@ -27,11 +27,24 @@ import butterknife.InjectView;
 public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapter.MyViewHoler> {
     private final Context mContent;
     private final List<GoodsBean> datas;
+    private final TextView tvShopcartTotal;
+    private final CheckBox checkboxAll;
+    private final CheckBox checkboxDeleteAll;
+    private String totalPrice;
 
-    public ShoppingCartAdapter(Context mContent, List<GoodsBean> list) {
+    public ShoppingCartAdapter(Context mContent, List<GoodsBean> list, TextView tvShopcartTotal, CheckBox checkboxAll, CheckBox checkboxDeleteAll) {
         this.mContent = mContent;
         this.datas = list;
+        this.tvShopcartTotal = tvShopcartTotal;
+        this.checkboxAll = checkboxAll;
+        this.checkboxDeleteAll = checkboxDeleteAll;
+        showTotalPrice();
     }
+
+    private void showTotalPrice() {
+        tvShopcartTotal.setText("合计：" + getTotalPrice());
+    }
+
 
     /**
      * 创建viewholder   创建视图
@@ -51,7 +64,8 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         //得到数据
         GoodsBean goodsBean = datas.get(position);
         Log.e("TAG", "datas" + datas.get(position));
-
+        //绑定数据
+        holder.cbGov.setChecked(goodsBean.isChecked());
         //图片
         Glide.with(mContent).load(Constants.BASE_URL_IMAGE + goodsBean.getFigure()).into(holder.ivGov);
         //设置名称
@@ -70,6 +84,19 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     @Override
     public int getItemCount() {
         return datas.size();
+    }
+
+    public double getTotalPrice() {
+        double totalPrice = 0;
+        if(datas!=null&&datas.size()>0) {
+            for (int i = 0; i < datas.size(); i++) {
+                GoodsBean goodsBean = datas.get(i);
+                if(goodsBean.isChecked()) {
+                    totalPrice+=Double.parseDouble(goodsBean.getCover_price())*goodsBean.getNumber();
+                }
+            }
+        }
+        return totalPrice;
     }
 
     class MyViewHoler extends RecyclerView.ViewHolder {

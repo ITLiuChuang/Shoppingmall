@@ -74,7 +74,7 @@ public class ShoppingCartFragment extends BaseFragment {
         if (list != null && list.size() > 0) {
             //有数据
             llEmptyShopcart.setVisibility(View.GONE);
-            adapter = new ShoppingCartAdapter(mContent, list);
+            adapter = new ShoppingCartAdapter(mContent, list,tvShopcartTotal,checkboxAll,checkboxDeleteAll);
             //设置适配器
             recyclerview.setAdapter(adapter);
             //设置管理器

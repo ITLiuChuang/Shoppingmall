@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
     <!--线性布局-->
     <LinearLayout
@@ -13,12 +13,14 @@
 
         <CheckBox
             android:id="@+id/cb_gov"
+            android:clickable="false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:button="@drawable/checkbox_selector"
-            android:checked="true"
-            android:clickable="false" />
+             />
+        <!--android:checked="true"
+        android:clickable="false"-->
 
         <ImageView
             android:id="@+id/iv_gov"
@@ -61,13 +63,13 @@
 
                 <com.atguigu.shopping.shoppingcart.view.AddSubView
                     android:id="@+id/addSubView"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
                     app:maxValue="15"
                     app:minValue="1"
                     app:numberAddBackground="@drawable/goods_add_btn"
                     app:numberSubBackground="@drawable/goods_sub_btn"
-                    app:value="1"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content" />
+                    app:value="1" />
             </LinearLayout>
         </LinearLayout>
 
