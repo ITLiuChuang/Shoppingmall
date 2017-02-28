@@ -63,7 +63,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     public void onBindViewHolder(MyViewHoler holder, int position) {
 
         //得到数据
-        GoodsBean goodsBean = datas.get(position);
+        final GoodsBean goodsBean = datas.get(position);
         Log.e("TAG", "datas" + datas.get(position));
         //绑定数据
         holder.cbGov.setChecked(goodsBean.isChecked());
@@ -80,6 +80,15 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         holder.addSubView.getMinValue(1);
         holder.addSubView.getMaxValue(100);
 
+        holder.addSubView.setOnNumberChangerListener(new AddSubView.OnNumberChangerListener() {
+            @Override
+            public void OnNumberChanger(int value) {
+                //回调数量
+                goodsBean.setNumber(value);
+                CartStorage.getInstance(mContent).updataData(goodsBean);
+                showTotalPrice();
+            }
+        });
     }
 
     @Override
