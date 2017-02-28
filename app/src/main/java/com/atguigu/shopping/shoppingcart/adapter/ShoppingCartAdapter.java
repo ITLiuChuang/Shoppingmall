@@ -112,6 +112,20 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         }
     }
 
+    public void checkAll_none(boolean isChecked){
+        if(datas!=null&&datas.size()>0) {
+            for (int i = 0; i < datas.size(); i++) {
+                GoodsBean goodsBean = datas.get(i);
+                //设置勾选状态
+                goodsBean.setChecked(isChecked);
+                checkboxAll.setChecked(isChecked);
+                checkboxDeleteAll.setChecked(isChecked);
+                //跟新视图
+                notifyItemChanged(i);
+            }
+        }
+
+    }
     public double getTotalPrice() {
         double totalPrice = 0;
         if (datas != null && datas.size() > 0) {
