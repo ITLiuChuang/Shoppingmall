@@ -61,13 +61,5 @@ public class GoodsBean implements Serializable {
         this.product_id = product_id;
     }
 
-    @Override
-    public String toString() {
-        return "GoodsBean{" +
-                "cover_price='" + cover_price + '\'' +
-                ", figure='" + figure + '\'' +
-                ", name='" + name + '\'' +
-                ", product_id='" + product_id + '\'' +
-                '}';
-    }
+
 }

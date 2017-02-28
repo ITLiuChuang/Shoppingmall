@@ -37,7 +37,7 @@ public class CartStorage {
         List<GoodsBean> list = getAllData();
         for (int i = 0; i < list.size(); i++) {
             GoodsBean goodsBean = list.get(i);
-            sparseArray.put(Integer.getInteger(goodsBean.getProduct_id()), goodsBean);
+            sparseArray.put(Integer.parseInt(goodsBean.getProduct_id()), goodsBean);
         }
     }
 
@@ -94,7 +94,7 @@ public class CartStorage {
      */
     public void addData(GoodsBean goodsBean) {
         //1.添加数据到sparseArray
-        GoodsBean tempGoodsBean = sparseArray.get(Integer.getInteger(goodsBean.getProduct_id()));
+        GoodsBean tempGoodsBean = sparseArray.get(Integer.parseInt(goodsBean.getProduct_id()));
         if (tempGoodsBean != null) {
             //添加过
             tempGoodsBean.setNumber(tempGoodsBean.getNumber() + goodsBean.getNumber());
@@ -104,7 +104,7 @@ public class CartStorage {
         }
 
         //添加到集合中
-        sparseArray.put(Integer.getInteger(goodsBean.getProduct_id()), tempGoodsBean);
+        sparseArray.put(Integer.parseInt(goodsBean.getProduct_id()), tempGoodsBean);
 
         //2.保存到本地
         saveLocal();
@@ -115,12 +115,12 @@ public class CartStorage {
      * @param goodsBean
      */
     public void daleteData(GoodsBean goodsBean){
-        sparseArray.delete(Integer.getInteger(goodsBean.getProduct_id()));
+        sparseArray.delete(Integer.parseInt(goodsBean.getProduct_id()));
         saveLocal();
     }
 
     public void updataData (GoodsBean goodsBean){
-        sparseArray.put(Integer.getInteger(goodsBean.getProduct_id()),goodsBean);
+        sparseArray.put(Integer.parseInt(goodsBean.getProduct_id()),goodsBean);
         saveLocal();
     }
 

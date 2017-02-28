@@ -3,6 +3,7 @@ package com.atguigu.shopping.app;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.atguigu.shopping.R;
 import com.atguigu.shopping.home.adapter.HomeAdapter;
 import com.atguigu.shopping.home.bean.GoodsBean;
+import com.atguigu.shopping.shoppingcart.utils.CartStorage;
 import com.atguigu.shopping.utils.Constants;
 import com.bumptech.glide.Glide;
 
@@ -80,8 +82,9 @@ public class GoodsInfoActivity extends AppCompatActivity {
     }
 
     public void getData() {
-        goodsBean = (GoodsBean) getIntent().getSerializableExtra(HomeAdapter.GOODS_BEAN);
 
+        goodsBean = (GoodsBean) getIntent().getSerializableExtra(HomeAdapter.GOODS_BEAN);
+        Log.e("TAG","333333333333333"+goodsBean);
         setData();
     }
 
@@ -152,7 +155,9 @@ public class GoodsInfoActivity extends AppCompatActivity {
                 break;
             case R.id.btn_good_info_addcart:
                 Toast.makeText(GoodsInfoActivity.this, "添加购物车", Toast.LENGTH_SHORT).show();
+            CartStorage.getInstance(this).addData(goodsBean);
                 break;
+
             case R.id.tv_more_search:
                 Toast.makeText(GoodsInfoActivity.this, "搜索", Toast.LENGTH_SHORT).show();
                 break;
