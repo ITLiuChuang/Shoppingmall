@@ -1,8 +1,10 @@
 package com.atguigu.shopping.home.adapter;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebResourceRequest;
@@ -15,13 +17,19 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.atguigu.shopping.R;
+import com.atguigu.shopping.app.GoodsInfoActivity;
+import com.atguigu.shopping.home.bean.GoodsBean;
+import com.atguigu.shopping.home.bean.H5Bean;
 import com.atguigu.shopping.home.bean.WebViewBean;
 import com.atguigu.shopping.utils.Constants;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+
+import static com.atguigu.shopping.home.adapter.HomeAdapter.GOODS_BEAN;
 
 public class WebViewActivity extends AppCompatActivity {
 
@@ -99,7 +107,18 @@ public class WebViewActivity extends AppCompatActivity {
     class MyJavascriptInterface {
         @JavascriptInterface
         public void jumpForAndroid(String data) {
-            Toast.makeText(WebViewActivity.this, "data = " + data, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(WebViewActivity.this, "data = " + data, Toast.LENGTH_SHORT).show();
+            if(!TextUtils.isEmpty(data)){
+                H5Bean h5Bean =  JSON.parseObject(data,H5Bean.class);
+                GoodsBean goodsBean = new GoodsBean();
+                goodsBean.setProduct_id(h5Bean.getValue().getProduct_id()+"");
+                goodsBean.setCover_price("10080");
+                goodsBean.setFigure("/1478770583834.png");
+                goodsBean.setName("尚硅谷Android");
+                Intent intent = new Intent(WebViewActivity.this, GoodsInfoActivity.class);
+                intent.putExtra(GOODS_BEAN,goodsBean);
+                startActivity(intent);
+            }
         }
     }
 }

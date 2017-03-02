@@ -162,7 +162,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
     public double getTotalPrice() {
         double totalPrice = 0;
         if (datas != null && datas.size() > 0) {
-            for (int i = 0; i < datas.size(); i++) {
+            for (int i  = 0; i < datas.size(); i++) {
                 GoodsBean goodsBean = datas.get(i);
                 if (goodsBean.isChecked()) {
                     totalPrice += Double.parseDouble(goodsBean.getCover_price()) * goodsBean.getNumber();

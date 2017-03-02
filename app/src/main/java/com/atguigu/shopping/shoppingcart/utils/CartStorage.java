@@ -146,4 +146,7 @@ public class CartStorage {
         return goodsBeen;
     }
 
+    public GoodsBean findDete(String product_id) {
+        return  sparseArray.get(Integer.parseInt(product_id));
+    }
 }
