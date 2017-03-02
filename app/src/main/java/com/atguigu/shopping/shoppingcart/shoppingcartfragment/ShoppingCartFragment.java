@@ -80,7 +80,7 @@ public class ShoppingCartFragment extends BaseFragment {
 
     @Override
     public View initView() {
-        View view = View.inflate(mContent, R.layout.fragment_shopping_cart, null);
+        View view = View.inflate(mContext, R.layout.fragment_shopping_cart, null);
         ButterKnife.inject(this, view);
 
         return view;
@@ -130,15 +130,15 @@ public class ShoppingCartFragment extends BaseFragment {
 
 
     private void showData() {
-        list = CartStorage.getInstance(mContent).getAllData();
+        list = CartStorage.getInstance(mContext).getAllData();
         if (list != null && list.size() > 0) {
             //有数据
             llEmptyShopcart.setVisibility(View.GONE);
-            adapter = new ShoppingCartAdapter(mContent, list, tvShopcartTotal, checkboxAll, checkboxDeleteAll);
+            adapter = new ShoppingCartAdapter(mContext, list, tvShopcartTotal, checkboxAll, checkboxDeleteAll);
             //设置适配器
             recyclerview.setAdapter(adapter);
             //设置管理器
-            recyclerview.setLayoutManager(new LinearLayoutManager(mContent, LinearLayoutManager.VERTICAL, false));
+            recyclerview.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
             //点击事件监听
             adapter.setOnItemClickListener(new ShoppingCartAdapter.OnItemClickListener() {
                 @Override
@@ -195,7 +195,7 @@ public class ShoppingCartFragment extends BaseFragment {
                 });
                 break;
             case R.id.checkbox_all:
-                Toast.makeText(mContent, "全选", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "全选", Toast.LENGTH_SHORT).show();
                 isChecked = checkboxAll.isChecked();
                 //全选和反全选
                 adapter.checkAll_none(isChecked);
@@ -203,7 +203,7 @@ public class ShoppingCartFragment extends BaseFragment {
                 adapter.showTotalPrice();
                 break;
             case R.id.btn_check_out:
-//                Toast.makeText(mContent, "结算", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "结算", Toast.LENGTH_SHORT).show();
                 pay();
                 break;
             case R.id.checkbox_delete_all:
@@ -219,10 +219,10 @@ public class ShoppingCartFragment extends BaseFragment {
                 showEempty();
                 break;
             case R.id.btn_collection:
-                Toast.makeText(mContent, "收藏", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "收藏", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_empty_cart_tobuy:
-                Toast.makeText(mContent, "去逛逛", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "去逛逛", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -278,16 +278,16 @@ public class ShoppingCartFragment extends BaseFragment {
                     String resultStatus = payResult.getResultStatus();
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
-                        Toast.makeText(mContent, "支付成功", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "支付成功", Toast.LENGTH_SHORT).show();
                     } else {
                         // 判断resultStatus 为非"9000"则代表可能支付失败
                         // "8000"代表支付结果因为支付渠道原因或者系统原因还在等待支付结果确认，最终交易是否成功以服务端异步通知为准（小概率状态）
                         if (TextUtils.equals(resultStatus, "8000")) {
-                            Toast.makeText(mContent, "支付结果确认中", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "支付结果确认中", Toast.LENGTH_SHORT).show();
 
                         } else {
                             // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
-                            Toast.makeText(mContent, "支付失败", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "支付失败", Toast.LENGTH_SHORT).show();
 
                         }
                     }
@@ -305,7 +305,7 @@ public class ShoppingCartFragment extends BaseFragment {
      */
     public void pay() {
         if (TextUtils.isEmpty(PARTNER) || TextUtils.isEmpty(RSA_PRIVATE) || TextUtils.isEmpty(SELLER)) {
-            new AlertDialog.Builder(mContent).setTitle("警告").setMessage("需要配置PARTNER | RSA_PRIVATE| SELLER")
+            new AlertDialog.Builder(mContext).setTitle("警告").setMessage("需要配置PARTNER | RSA_PRIVATE| SELLER")
                     .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialoginterface, int i) {
                             //
@@ -339,7 +339,7 @@ public class ShoppingCartFragment extends BaseFragment {
             @Override
             public void run() {
                 // 构造PayTask 对象
-                PayTask alipay = new PayTask((Activity) mContent);
+                PayTask alipay = new PayTask((Activity) mContext);
                 // 调用支付接口，获取支付结果
                 String result = alipay.pay(payInfo, true);
 

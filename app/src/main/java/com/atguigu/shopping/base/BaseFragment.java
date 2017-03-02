@@ -16,7 +16,7 @@ public abstract class BaseFragment extends Fragment {
     /**
      * 上下文
      */
-    public Context mContent;
+    public Context mContext;
 
     /**
      * 当Fragment被创建调用
@@ -25,7 +25,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContent = getActivity();
+        mContext = getActivity();
     }
 
     /**

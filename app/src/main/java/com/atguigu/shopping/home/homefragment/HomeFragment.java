@@ -41,7 +41,7 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public View initView() {
-        View view = View.inflate(mContent, R.layout.fragment_home, null);
+        View view = View.inflate(mContext, R.layout.fragment_home, null);
         ButterKnife.inject(this, view);
         return view;
     }
@@ -83,9 +83,9 @@ public class HomeFragment extends BaseFragment {
         HomeBean homeBean = new Gson().fromJson(response, HomeBean.class);
         Log.e("TAG", "解析数据成功");
 
-        homeAdapter = new HomeAdapter(mContent, homeBean.getResult());
+        homeAdapter = new HomeAdapter(mContext, homeBean.getResult());
         rvHome.setAdapter(homeAdapter);
-        GridLayoutManager manager = new GridLayoutManager(mContent, 1);
+        GridLayoutManager manager = new GridLayoutManager(mContext, 1);
         //设置布局管理器
         rvHome.setLayoutManager(manager);
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup(){
@@ -112,13 +112,13 @@ public class HomeFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_search_home:
-                Toast.makeText(mContent, "搜索", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "搜索", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_message_home:
-                Toast.makeText(mContent, "消息", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "消息", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.ib_top:
-//                Toast.makeText(mContent, "返回顶部", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "返回顶部", Toast.LENGTH_SHORT).show();
                 rvHome.scrollToPosition(0);
                 break;
         }

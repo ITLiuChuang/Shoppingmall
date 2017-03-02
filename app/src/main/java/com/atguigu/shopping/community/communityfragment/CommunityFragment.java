@@ -17,7 +17,7 @@ public class CommunityFragment extends BaseFragment {
 
     @Override
     public View initView() {
-        textView = new TextView(mContent);
+        textView = new TextView(mContext);
 
         textView.setTextColor(Color.RED);
         textView.setTextSize(20);
