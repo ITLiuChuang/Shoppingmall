@@ -1,16 +1,24 @@
 package com.atguigu.shopping.type.typefragment;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.atguigu.shopping.R;
 import com.atguigu.shopping.base.BaseFragment;
 import com.atguigu.shopping.type.adapter.TypeLeftAdapter;
+import com.atguigu.shopping.type.bean.TypeBean;
+import com.atguigu.shopping.utils.Constants;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import okhttp3.Call;
 
 /**
  * Created by 刘闯 on 2017/3/2.
@@ -23,6 +31,12 @@ public class ListFragment extends BaseFragment {
     ListView lvLeft;
     @InjectView(R.id.rv_right)
     RecyclerView rvRight;
+    /**
+     * 联网集合
+     */
+    private String[] urls = new String[]{Constants.SKIRT_URL, Constants.JACKET_URL, Constants.PANTS_URL, Constants.OVERCOAT_URL,
+            Constants.ACCESSORY_URL, Constants.BAG_URL, Constants.DRESS_UP_URL, Constants.HOME_PRODUCTS_URL, Constants.STATIONERY_URL,
+            Constants.DIGIT_URL, Constants.GAME_URL};
 
     private TypeLeftAdapter leftAdapter;
     private String[] titles = new String[]{"小裙子", "上衣", "下装", "外套", "配件", "包包", "装扮", "居家宅品",
@@ -39,7 +53,7 @@ public class ListFragment extends BaseFragment {
     public void initData() {
         super.initData();
         //设置适配器
-        leftAdapter = new TypeLeftAdapter(mContext,titles);
+        leftAdapter = new TypeLeftAdapter(mContext, titles);
         lvLeft.setAdapter(leftAdapter);
         //设置item的点击事件监听
         lvLeft.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -51,6 +65,32 @@ public class ListFragment extends BaseFragment {
                 leftAdapter.notifyDataSetChanged();
             }
         });
+        //联网请求
+        getDataFromNet(urls[0]);
+    }
+
+    private void getDataFromNet(String url) {
+        OkHttpUtils
+                .get()
+                .url(url)
+                .build().execute(new StringCallback() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+                Log.e("TAG", "联网请求失败" + e.getMessage());
+
+            }
+
+            @Override
+            public void onResponse(String response, int id) {
+                Log.e("TAG", "联网请求成功");
+                processData(response);
+            }
+        });
+    }
+
+    private void processData(String response) {
+        TypeBean typeBean = JSON.parseObject(response, TypeBean.class);
+        Toast.makeText(mContext, ""+typeBean.getResult().get(0).getName(), Toast.LENGTH_SHORT).show();
     }
 
 
