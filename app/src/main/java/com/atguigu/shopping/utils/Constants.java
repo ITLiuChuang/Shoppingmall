@@ -6,9 +6,10 @@ package com.atguigu.shopping.utils;
 
 public class Constants {
 
-    //    public static String BASE_URL = "http://192.168.51.104:8080/atguigu";
-   public static String BASE_URL = "http://182.92.5.3:8081/android/resources";
-    //public static String BASE_URL = "http://192.168.1.23:8080/atguigu";
+    //公网
+//   public static String BASE_URL = "http://182.92.5.3:8081/android/resources";
+    //本地服务器
+    public static String BASE_URL = "http://192.168.1.23:8080/atguigu";
 
 
     private static final String BASE_URL_JSON = BASE_URL+"/json/";
