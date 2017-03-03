@@ -1,20 +1,23 @@
 package com.atguigu.shopping.type.typefragment;
 
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.atguigu.shopping.R;
 import com.atguigu.shopping.base.BaseFragment;
 import com.atguigu.shopping.type.adapter.TypeLeftAdapter;
+import com.atguigu.shopping.type.adapter.TypeRightAdapter;
 import com.atguigu.shopping.type.bean.TypeBean;
 import com.atguigu.shopping.utils.Constants;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -41,6 +44,7 @@ public class ListFragment extends BaseFragment {
     private TypeLeftAdapter leftAdapter;
     private String[] titles = new String[]{"小裙子", "上衣", "下装", "外套", "配件", "包包", "装扮", "居家宅品",
             "办公文具", "数码周边", "游戏专区"};
+    private TypeRightAdapter adapter;
 
     @Override
     public View initView() {
@@ -90,7 +94,26 @@ public class ListFragment extends BaseFragment {
 
     private void processData(String response) {
         TypeBean typeBean = JSON.parseObject(response, TypeBean.class);
-        Toast.makeText(mContext, ""+typeBean.getResult().get(0).getName(), Toast.LENGTH_SHORT).show();
+        List<TypeBean.ResultBean> result = typeBean.getResult();
+        if(result!=null&&result.size()>0) {
+         //设置适配器
+            adapter = new TypeRightAdapter(mContext,result);
+            rvRight.setAdapter(adapter);
+
+            //设置管理器
+            GridLayoutManager manager = new GridLayoutManager(mContext, 3);
+            manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                @Override
+                public int getSpanSize(int position) {
+                    if(position ==0) {
+                        return 3;
+                    }else {
+                        return 1;
+                    }
+                }
+            });
+            rvRight.setLayoutManager(manager);
+        }
     }
 
 
