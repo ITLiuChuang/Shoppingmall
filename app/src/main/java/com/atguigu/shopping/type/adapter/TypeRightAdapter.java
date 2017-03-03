@@ -39,6 +39,7 @@ public class TypeRightAdapter extends RecyclerView.Adapter {
      */
     private static final int COMMON = 1;
 
+
     private int currentType = HOT;
     private final Context mContext;
     private List<TypeBean.ResultBean.ChildBean> child;
@@ -74,6 +75,9 @@ public class TypeRightAdapter extends RecyclerView.Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == HOT) {
             return new HotViewHolder(inflater.inflate(R.layout.item_hot_right, null));
+        } else if (viewType == COMMON) {
+            return new CommonViewHolder(inflater.inflate(R.layout.item_common_right, null));
+
         }
         return null;
     }
@@ -83,12 +87,16 @@ public class TypeRightAdapter extends RecyclerView.Adapter {
         if (getItemViewType(position) == HOT) {
             HotViewHolder viewHolder = (HotViewHolder) holder;
             viewHolder.setData(hot_product_list);
+        }else if(getItemViewType(position)== COMMON) {
+            CommonViewHolder viewHolder = (CommonViewHolder) holder;
+            int realPostion = position-1;
+            viewHolder.setData(child.get(realPostion));
         }
     }
 
     @Override
     public int getItemCount() {
-        return 1;
+        return 1 + child.size();
     }
 
     class HotViewHolder extends RecyclerView.ViewHolder {
@@ -172,6 +180,36 @@ public class TypeRightAdapter extends RecyclerView.Adapter {
                     }
                 });
             }
+        }
+
+    }
+
+    class CommonViewHolder extends RecyclerView.ViewHolder {
+        @InjectView(R.id.iv_ordinary_right)
+        ImageView ivOrdinaryRight;
+        @InjectView(R.id.tv_ordinary_right)
+        TextView tvOrdinaryRight;
+        @InjectView(R.id.ll_root)
+        LinearLayout llRoot;
+
+        public CommonViewHolder(View inflate) {
+            super(inflate);
+            ButterKnife.inject(this, inflate);
+        }
+
+        public void setData(final TypeBean.ResultBean.ChildBean childBean) {
+            //1.请求图片
+            //请求图片
+            Glide.with(mContext).load(Constants.BASE_URL_IMAGE + childBean.getPic()).into(ivOrdinaryRight);
+            //设置文本
+            tvOrdinaryRight.setText(childBean.getName());
+
+            llRoot.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext, ""+childBean.getName(), Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }
