@@ -28,6 +28,7 @@ public class NewPostFragment extends BaseFragment {
 
     @InjectView(R.id.lv_new_post)
     ListView lvNewPost;
+    private NewPostListViewAdapter adapter;
 
     @Override
     public View initView() {
@@ -66,7 +67,8 @@ public class NewPostFragment extends BaseFragment {
         List<NewPostBean.ResultEntity> result = bean.getResult();
         if (result != null && result.size() > 0) {
             //设置适配器
-            NewPostListViewAdapter adapter = new NewPostListViewAdapter(mContext,result);
+            adapter = new NewPostListViewAdapter(mContext,result);
+            lvNewPost.setAdapter(adapter);
         }
 
 
