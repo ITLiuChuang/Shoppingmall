@@ -13,7 +13,12 @@ import com.atguigu.shopping.R;
 import com.atguigu.shopping.community.bean.NewPostBean;
 import com.atguigu.shopping.utils.Constants;
 import com.bumptech.glide.Glide;
+import com.opendanmaku.DanmakuItem;
+import com.opendanmaku.DanmakuView;
+import com.opendanmaku.IDanmakuItem;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -69,8 +74,33 @@ public class NewPostListViewAdapter extends BaseAdapter {
         viewHolder.tvCommunitySaying.setText(entity.getSaying());
         viewHolder.tvCommunityLikes.setText(entity.getLikes());
         viewHolder.tvCommunityComments.setText(entity.getComments());
+
+
+        //显示弹幕
+        List<String> strings = entity.getComment_list();
+        if (strings != null && strings.size() > 0) {
+            //有弹幕数据
+            List<IDanmakuItem> list = initItems(viewHolder.danmakuView, strings);
+            Collections.shuffle(list);
+            viewHolder.danmakuView.addItem(list, true);
+            viewHolder.danmakuView.show();
+            viewHolder.danmakuView.setVisibility(View.VISIBLE);
+        } else {
+            viewHolder.danmakuView.hide();
+            viewHolder.danmakuView.setVisibility(View.GONE);
+        }
         return convertView;
     }
+
+    private List<IDanmakuItem> initItems(DanmakuView danmakuView, List<String> strings) {
+        List<IDanmakuItem> list = new ArrayList<>();
+        for (int i = 0; i < strings.size(); i++) {
+            IDanmakuItem item = new DanmakuItem(mContext, strings.get(i), danmakuView.getWidth());
+            list.add(item);
+        }
+        return list;
+    }
+
 
     static class ViewHolder {
         @InjectView(R.id.tv_community_username)
@@ -83,6 +113,8 @@ public class NewPostListViewAdapter extends BaseAdapter {
         ImageButton ibNewPostAvatar;
         @InjectView(R.id.iv_community_figure)
         ImageView ivCommunityFigure;
+        @InjectView(R.id.danmakuView)
+        DanmakuView danmakuView;
         @InjectView(R.id.tv_community_saying)
         TextView tvCommunitySaying;
         @InjectView(R.id.tv_community_likes)
