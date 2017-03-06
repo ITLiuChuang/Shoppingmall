@@ -8,7 +8,7 @@ import com.alibaba.fastjson.JSON;
 import com.atguigu.shopping.R;
 import com.atguigu.shopping.base.BaseFragment;
 import com.atguigu.shopping.community.adapter.HotPostListViewAdapter;
-import com.atguigu.shopping.community.bean.NewPostBean;
+import com.atguigu.shopping.community.bean.HotPostBean;
 import com.atguigu.shopping.utils.Constants;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -46,7 +46,7 @@ public class HotPostFragment extends BaseFragment {
     private void getDataFromNet() {
 
         OkHttpUtils.get()
-                .url(Constants.NEW_POST_URL)
+                .url(Constants.HOT_POST_URL)
                 .id(100)
                 .build()
                 .execute(new StringCallback() {
@@ -64,8 +64,8 @@ public class HotPostFragment extends BaseFragment {
     }
 
     private void processData(String json) {
-        NewPostBean bean = JSON.parseObject(json, NewPostBean.class);
-        List<NewPostBean.ResultEntity> result = bean.getResult();
+        HotPostBean bean = JSON.parseObject(json, HotPostBean.class);
+        List<HotPostBean.ResultEntity> result = bean.getResult();
         if (result != null && result.size() > 0) {
             //设置适配器
             adapter = new HotPostListViewAdapter(mContext, result);

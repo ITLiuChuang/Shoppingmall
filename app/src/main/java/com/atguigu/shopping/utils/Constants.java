@@ -11,7 +11,6 @@ public class Constants {
     //本地服务器
     public static String BASE_URL = "http://192.168.1.23:8080/atguigu";
 
-
     private static final String BASE_URL_JSON = BASE_URL+"/json/";
     /**
      * 主页面的路径

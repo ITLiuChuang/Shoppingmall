@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.atguigu.shopping.R;
-import com.atguigu.shopping.community.bean.NewPostBean;
+import com.atguigu.shopping.community.bean.HotPostBean;
 import com.atguigu.shopping.utils.Constants;
 import com.atguigu.shopping.utils.DensityUtil;
 import com.bumptech.glide.Glide;
@@ -28,9 +28,9 @@ import butterknife.InjectView;
 
 public class HotPostListViewAdapter extends BaseAdapter {
     private final Context mContext;
-    private final List<NewPostBean.ResultEntity> datas;
+    private final List<HotPostBean.ResultEntity> datas;
 
-    public HotPostListViewAdapter(Context mContext, List<NewPostBean.ResultEntity> result) {
+    public HotPostListViewAdapter(Context mContext, List<HotPostBean.ResultEntity> result) {
         this.mContext = mContext;
         this.datas = result;
     }
@@ -61,7 +61,7 @@ public class HotPostListViewAdapter extends BaseAdapter {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         //根据位置得到对应的数据
-        NewPostBean.ResultEntity entity = datas.get(position);
+        HotPostBean.ResultEntity entity = datas.get(position);
         //图像
         Glide.with(mContext).load(Constants.BASE_URL_IMAGE + entity.getAvatar()).into(viewHolder.ivNewPostAvatar);
 

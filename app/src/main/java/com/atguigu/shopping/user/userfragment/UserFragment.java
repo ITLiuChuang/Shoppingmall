@@ -1,5 +1,6 @@
 package com.atguigu.shopping.user.userfragment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -9,11 +10,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.atguigu.shopping.R;
+import com.atguigu.shopping.app.LoginActivity;
 import com.atguigu.shopping.base.BaseFragment;
 import com.hankkin.gradationscroll.GradationScrollView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * Created by 刘闯 on 2017/2/22.
@@ -59,7 +62,7 @@ public class UserFragment extends BaseFragment implements GradationScrollView.Sc
     @InjectView(R.id.ll_root)
     LinearLayout llRoot;
     @InjectView(R.id.scrollview)
-    com.hankkin.gradationscroll.GradationScrollView scrollview;
+    GradationScrollView scrollview;
     @InjectView(R.id.tv_usercenter)
     TextView tvUsercenter;
     @InjectView(R.id.ib_user_setting)
@@ -68,7 +71,6 @@ public class UserFragment extends BaseFragment implements GradationScrollView.Sc
     ImageButton ibUserMessage;
     /**
      * 头部的高度
-     *
      */
     private int height;
 
@@ -103,9 +105,6 @@ public class UserFragment extends BaseFragment implements GradationScrollView.Sc
     }
 
 
-
-
-
     @Override
     public void onScrollChanged(GradationScrollView scrollView, int x, int y, int oldx, int oldy) {
         if (y <= 0) {
@@ -136,4 +135,9 @@ public class UserFragment extends BaseFragment implements GradationScrollView.Sc
     }
 
 
+    @OnClick(R.id.tv_username)
+    public void onClick() {
+        Intent intent = new Intent(mContext, LoginActivity.class);
+        startActivity(intent);
+    }
 }
