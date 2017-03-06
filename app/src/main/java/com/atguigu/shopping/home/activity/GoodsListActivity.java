@@ -1,8 +1,10 @@
 package com.atguigu.shopping.home.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -14,10 +16,17 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.atguigu.shopping.R;
+import com.atguigu.shopping.app.GoodsInfoActivity;
+import com.atguigu.shopping.home.adapter.GoodsListAdapter;
+import com.atguigu.shopping.home.adapter.HomeAdapter;
+import com.atguigu.shopping.home.bean.GoodsBean;
 import com.atguigu.shopping.home.bean.TypeListBean;
+import com.atguigu.shopping.home.view.SpaceItemDecoration;
 import com.atguigu.shopping.utils.Constants;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -63,6 +72,7 @@ public class GoodsListActivity extends AppCompatActivity {
             Constants.SHOUSHI_STORE,
     };
     private int position;
+    private GoodsListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,8 +104,32 @@ public class GoodsListActivity extends AppCompatActivity {
 
     private void processData(String json) {
         TypeListBean typeListBean = JSON.parseObject(json, TypeListBean.class);
-        Log.e("TAG", typeListBean.getResult().getPage_data().get(0).getName());
+       // Log.e("TAG",typeListBean.getResult().getPage_data().get(0).getName());
+        List<TypeListBean.ResultEntity.PageDataEntity> datas = typeListBean.getResult().getPage_data();
+        if (datas != null && datas.size() > 0) {
+            //设置适配器
+            adapter = new GoodsListAdapter(this, datas);
+            recyclerview.setAdapter(adapter);
+            //设置布局管理器
+            recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
+            recyclerview.addItemDecoration(new SpaceItemDecoration(10));
 
+            adapter.setOnItemClickListener(new GoodsListAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClickListener(TypeListBean.ResultEntity.PageDataEntity data) {
+                    GoodsBean goodsBean = new GoodsBean();
+                    goodsBean.setName(data.getName());
+                    goodsBean.setFigure(data.getFigure());
+                    goodsBean.setCover_price(data.getCover_price());
+                    goodsBean.setProduct_id(data.getProduct_id());
+
+                    Intent intent = new Intent(GoodsListActivity.this, GoodsInfoActivity.class);
+                    intent.putExtra(HomeAdapter.GOODS_BEAN, goodsBean);
+                    startActivity(intent);
+
+                }
+            });
+        }
 
     }
 
