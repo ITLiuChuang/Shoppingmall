@@ -3,6 +3,7 @@ package com.atguigu.shopping.shoppingcart.shoppingcartfragment;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AlertDialog;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alipay.sdk.app.PayTask;
+import com.atguigu.shopping.MainActivity;
 import com.atguigu.shopping.R;
 import com.atguigu.shopping.base.BaseFragment;
 import com.atguigu.shopping.home.bean.GoodsBean;
@@ -128,6 +130,11 @@ public class ShoppingCartFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        showData();
+    }
 
     private void showData() {
         list = CartStorage.getInstance(mContext).getAllData();
@@ -160,6 +167,7 @@ public class ShoppingCartFragment extends BaseFragment {
             //没数据
             llEmptyShopcart.setVisibility(View.VISIBLE);
         }
+
     }
 
 
@@ -222,7 +230,10 @@ public class ShoppingCartFragment extends BaseFragment {
                 Toast.makeText(mContext, "收藏", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_empty_cart_tobuy:
-                Toast.makeText(mContext, "去逛逛", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(mContext, "去逛逛", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(mContext, MainActivity.class);
+                intent.putExtra("checkedid", R.id.rb_home);
+                startActivity(intent);
                 break;
         }
     }
@@ -296,12 +307,13 @@ public class ShoppingCartFragment extends BaseFragment {
                 default:
                     break;
             }
-        };
+        }
+
+        ;
     };
 
     /**
      * call alipay sdk pay. 调用SDK支付
-     *
      */
     public void pay() {
         if (TextUtils.isEmpty(PARTNER) || TextUtils.isEmpty(RSA_PRIVATE) || TextUtils.isEmpty(SELLER)) {
@@ -357,7 +369,6 @@ public class ShoppingCartFragment extends BaseFragment {
 
     /**
      * create the order info. 创建订单信息
-     *
      */
     private String getOrderInfo(String subject, String body, String price) {
 
@@ -412,7 +423,6 @@ public class ShoppingCartFragment extends BaseFragment {
 
     /**
      * get the out_trade_no for an order. 生成商户订单号，该值在商户端应保持唯一（可自定义格式规范）
-     *
      */
     private String getOutTradeNo() {
         SimpleDateFormat format = new SimpleDateFormat("MMddHHmmss", Locale.getDefault());
@@ -428,15 +438,14 @@ public class ShoppingCartFragment extends BaseFragment {
     /**
      * sign the order info. 对订单信息进行签名
      *
-     * @param content
-     *            待签名订单信息
+     * @param content 待签名订单信息
      */
     private String sign(String content) {
         return SignUtils.sign(content, RSA_PRIVATE);
     }
+
     /**
      * get the sign type we use. 获取签名方式
-     *
      */
     private String getSignType() {
         return "sign_type=\"RSA\"";

@@ -24,6 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.atguigu.shopping.MainActivity;
 import com.atguigu.shopping.R;
 import com.atguigu.shopping.home.adapter.HomeAdapter;
 import com.atguigu.shopping.home.bean.GoodsBean;
@@ -162,7 +163,11 @@ public class GoodsInfoActivity extends AppCompatActivity {
                 Toast.makeText(GoodsInfoActivity.this, "收藏", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_good_info_cart:
-                Toast.makeText(GoodsInfoActivity.this, "购物车", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(GoodsInfoActivity.this, "购物车", Toast.LENGTH_SHORT).show();
+                intent = new Intent(this, MainActivity.class);
+                intent.putExtra("checkedid",R.id.rb_cart);
+                startActivity(intent);
+                finish();
                 break;
             case R.id.btn_good_info_addcart:
 //                Toast.makeText(GoodsInfoActivity.this, "添加购物车", Toast.LENGTH_SHORT).show();
@@ -177,7 +182,7 @@ public class GoodsInfoActivity extends AppCompatActivity {
                 Toast.makeText(GoodsInfoActivity.this, "分享", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_more_home:
-                Toast.makeText(GoodsInfoActivity.this, "主页", Toast.LENGTH_SHORT).show();
+                finish();
                 break;
             case R.id.btn_more:
                 llRoot.setVisibility(View.GONE);
