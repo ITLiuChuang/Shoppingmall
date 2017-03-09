@@ -1,6 +1,7 @@
 package com.atguigu.shopping.type.typefragment;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -27,15 +28,18 @@ import okhttp3.Call;
 
 public class TagFragment extends BaseFragment {
 
+
     @InjectView(R.id.gv_tag)
     GridView gvTag;
     private List<TypeBean.ResultBean> result;
     private TagGridViewAdapter adapter;
+    private LayoutInflater inflater;
 
     @Override
     public View initView() {
         View view = View.inflate(mContext, R.layout.fragment_tag, null);
         ButterKnife.inject(this, view);
+        inflater = LayoutInflater.from(getActivity());
         return view;
     }
 
@@ -69,17 +73,20 @@ public class TagFragment extends BaseFragment {
         result = typeBean.getResult();
         if (result != null && result.size() > 0) {
             //设置适配器
-            adapter = new TagGridViewAdapter(mContext,result);
+            adapter = new TagGridViewAdapter(mContext, result);
+
             gvTag.setAdapter(adapter);
+
 
             //设置item的点击事件
             gvTag.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     TypeBean.ResultBean resultBean = result.get(position);
-                    Toast.makeText(mContext, ""+resultBean.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "" + resultBean.toString(), Toast.LENGTH_SHORT).show();
                 }
             });
+
 
         }
     }
@@ -89,4 +96,7 @@ public class TagFragment extends BaseFragment {
         super.onDestroyView();
         ButterKnife.reset(this);
     }
+
+
+
 }

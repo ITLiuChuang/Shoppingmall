@@ -3,12 +3,7 @@ package com.atguigu.shopping.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-/**
- * 作者：尚硅谷-杨光福 on 2017/2/27 10:55
- * 微信：yangguangfu520
- * QQ号：541433511
- * 作用：xxxx
- */
+
 public class CacheUtils {
     private static SharedPreferences sp;
 

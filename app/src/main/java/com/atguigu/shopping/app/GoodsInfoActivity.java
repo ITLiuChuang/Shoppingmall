@@ -179,7 +179,11 @@ public class GoodsInfoActivity extends AppCompatActivity {
                 Toast.makeText(GoodsInfoActivity.this, "搜索", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_more_share:
-                Toast.makeText(GoodsInfoActivity.this, "分享", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(GoodsInfoActivity.this, "分享", Toast.LENGTH_SHORT).show();
+                 intent = new Intent(GoodsInfoActivity.this, ZXingActivity.class);
+                intent.putExtra("image",goodsBean.getFigure());
+                startActivity(intent);
+
                 break;
             case R.id.tv_more_home:
                 finish();

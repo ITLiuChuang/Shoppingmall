@@ -70,17 +70,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:background="#fff"
             android:text="全部"
             android:textColor="#4e4444"
             android:textSize="15sp" />
 
-        <ImageView
+        <CheckBox
             android:id="@+id/iv_theme_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/filter_type_selected" />
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 
     <View
@@ -98,17 +98,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:background="#fff"
             android:text="盗墓笔记"
             android:textColor="#4e4444"
             android:textSize="15sp" />
 
-        <ImageView
+        <CheckBox
             android:id="@+id/iv_theme_note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/filter_type_selected" />
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 
     <View
@@ -126,17 +126,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:background="#fff"
             android:text="FUNKO"
             android:textColor="#4e4444"
             android:textSize="15sp" />
 
-        <ImageView
+        <CheckBox
             android:id="@+id/iv_theme_funko"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/filter_type_selected" />
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 
     <View
@@ -154,17 +154,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:background="#fff"
             android:text="GSC"
             android:textColor="#4e4444"
             android:textSize="15sp" />
 
-        <ImageView
+        <CheckBox
             android:id="@+id/iv_theme_gsc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/filter_type_selected" />
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 
     <View
@@ -182,17 +182,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:background="#fff"
             android:text="古风原创"
             android:textColor="#4e4444"
             android:textSize="15sp" />
 
-        <ImageView
+        <CheckBox
             android:id="@+id/iv_theme_origin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/filter_type_selected" />
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 
     <View
@@ -210,17 +210,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:background="#fff"
-            android:text="剑侠情愿叁"
+            android:text="剑侠情缘三"
             android:textColor="#4e4444"
             android:textSize="15sp" />
 
-        <ImageView
+        <CheckBox
             android:id="@+id/iv_theme_sword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/filter_type_selected" />
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 
     <View
@@ -238,17 +238,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:background="#fff"
             android:text="零食仓"
             android:textColor="#4e4444"
             android:textSize="15sp" />
 
-        <ImageView
+        <CheckBox
             android:id="@+id/iv_theme_food"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/filter_type_selected" />
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 
     <View
@@ -266,17 +266,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:background="#fff"
             android:text="秦时明月"
             android:textColor="#4e4444"
             android:textSize="15sp" />
 
-        <ImageView
+        <CheckBox
             android:id="@+id/iv_theme_moon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/filter_type_selected" />
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 
     <View
@@ -294,17 +294,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:background="#fff"
             android:text="全职高手"
             android:textColor="#4e4444"
             android:textSize="15sp" />
 
-        <ImageView
+        <CheckBox
             android:id="@+id/iv_theme_quanzhi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/filter_type_selected" />
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 
     <View
@@ -322,16 +322,16 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:background="#fff"
             android:text="长草颜文字"
             android:textColor="#4e4444"
             android:textSize="15sp" />
 
-        <ImageView
+        <CheckBox
             android:id="@+id/iv_theme_gress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/filter_type_selected" />
+            android:layout_alignParentRight="true" />
     </RelativeLayout>
 </LinearLayout>
